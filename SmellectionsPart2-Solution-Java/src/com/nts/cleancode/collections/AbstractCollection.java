@@ -12,20 +12,13 @@
 package com.nts.cleancode.collections;
 
 public abstract class AbstractCollection {
-	public void addAll(AbstractCollection c) {
-		if (c instanceof Set) {
-			Set s = (Set)c;
-			for (int i=0; i < s.size(); i++) {
-				if (!contains(s.getElementAt(i))) {
-					add(s.getElementAt(i));
-				}
-			}
-		} else if (c instanceof List) {
-			List l = (List)c;
-			for (int i=0; i < l.size(); i++) {
-				if (!contains(l.get(i))) {
-					add(l.get(i));
-				}
+	protected static int INITIAL_CAPACITY = 10;
+	protected Object[] elements = new Object[INITIAL_CAPACITY];
+	
+	public void addAll(AbstractCollection collection) {
+		for (int i=0; i < collection.size(); i++) { //3. 이 for 문을 제외하고 다 지우기 4. s>c 5. c > collection
+			if (!contains(collection.get(i))) {
+				add(collection.get(i)); //1. getElementAt > get (rename)
 			}
 		}
 	}
@@ -34,5 +27,9 @@ public abstract class AbstractCollection {
 	public abstract void add(Object element);
 	public abstract boolean remove(Object element);
 	public abstract boolean contains(Object element);
-	public abstract int size();	
+	public abstract int size();
+
+	public Object get(int index) {
+		return elements[index];
+	}	
 }

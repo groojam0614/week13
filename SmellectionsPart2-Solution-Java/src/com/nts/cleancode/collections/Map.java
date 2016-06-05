@@ -11,9 +11,10 @@
 
 package com.nts.cleancode.collections;
 
+//6. Scaffolding
 public class Map {
 	private static int INITIAL_CAPACITY = 10;
-	protected Object[] keys = new Object[INITIAL_CAPACITY];
+	protected Object[] keys = new Object[INITIAL_CAPACITY]; 
 	protected Object[] values = new Object[INITIAL_CAPACITY];
 	private int size = 0;
 	private int indexWhereKeyFound;
@@ -27,7 +28,7 @@ public class Map {
 		if (!readOnly) {
 			for (int i = 0; i < size; i++)
 				if (keys[i].equals(key)) {
-					values[i] = value;
+					setValue(value, i); //7. values[i] = value; > Extract Method > setValue
 					return;
 				}
 
@@ -42,9 +43,13 @@ public class Map {
 			}
 
 			keys[size] = key;
-			values[size] = value;
+			setValue(value, size);//8. values[size] = value; > setValue(value, size);
 			size++;
 		}
+	}
+
+	protected void setValue(Object value, int i) {
+		values[i] = value;
 	}
 
 	public int size() {
@@ -57,7 +62,7 @@ public class Map {
 		for (int i = 0; i < size; i++)
 			if (keys[i].equals(key)) {
 				keys[i] = null;
-				values[i] = null;
+				setValue(null, i);//9. values[i] = null; > setValue(null, i);
 				size--;
 				return true;
 			}
